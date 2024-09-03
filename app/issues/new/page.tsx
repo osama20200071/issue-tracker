@@ -1,6 +1,7 @@
 "use client";
 
 import ErrorMessage from "@/components/ErrorMessage";
+import Spinner from "@/components/Spinner";
 import {
   createIssueSchema,
   TCreateIssueSchema,
@@ -8,8 +9,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, TextArea, TextField } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const NewIssuePage = () => {
   const router = useRouter();
@@ -17,7 +18,7 @@ const NewIssuePage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<TCreateIssueSchema>({
     resolver: zodResolver(createIssueSchema),
   });
@@ -32,6 +33,7 @@ const NewIssuePage = () => {
     if (response.ok) {
       router.push("/issues");
     } else {
+      // when having error from the server
       setError("Error fetching issue schema");
     }
   };
@@ -58,7 +60,10 @@ const NewIssuePage = () => {
           <ErrorMessage>{errors.description?.message}</ErrorMessage>
         </div>
 
-        <Button type="submit">Create Issue</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Creating..." : "Create Issue"}
+          {isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
   );
