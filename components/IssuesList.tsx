@@ -1,5 +1,5 @@
 "use client";
-import { Issues, IssuesSchema } from "@/utils/schema";
+import { Issues, IssuesSchema } from "@/utils/ValidationSchemas";
 import React, { useEffect, useState } from "react";
 
 const IssuesList = () => {

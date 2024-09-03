@@ -1,5 +1,5 @@
 import prisma from "@/prisma/client";
-import { createIssueSchema } from "@/utils/schema";
+import { createIssueSchema } from "@/utils/ValidationSchemas";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

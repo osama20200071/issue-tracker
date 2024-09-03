@@ -1,6 +1,10 @@
 "use client";
 
-import { createIssueSchema, TCreateIssueSchema } from "@/utils/schema";
+import ErrorMessage from "@/components/ErrorMessage";
+import {
+  createIssueSchema,
+  TCreateIssueSchema,
+} from "@/utils/ValidationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, TextArea, TextField } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
@@ -43,9 +47,7 @@ const NewIssuePage = () => {
       <form onSubmit={handleSubmit(onSubmit)} className=" space-y-7">
         <div className="formGroup">
           <TextField.Root placeholder="issue title" {...register("title")} />
-          {errors.title && (
-            <span className="err-msg">{`${errors.title.message}`}</span>
-          )}
+          <ErrorMessage>{errors.title?.message}</ErrorMessage>
         </div>
 
         <div className="formGroup">
@@ -53,10 +55,7 @@ const NewIssuePage = () => {
             placeholder="issue description"
             {...register("description")}
           />
-
-          {errors.description && (
-            <span className="err-msg">{`${errors.description.message}`}</span>
-          )}
+          <ErrorMessage>{errors.description?.message}</ErrorMessage>
         </div>
 
         <Button type="submit">Create Issue</Button>
